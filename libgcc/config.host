@@ -210,6 +210,9 @@ s390*-*-*)
 sh[123456789lbe]*-*-*)
 	cpu_type=sh
 	;;
+tricore*-*-*)
+	cpu_type=tricore
+	;;
 v850*-*-*)
 	cpu_type=v850
 	;;
@@ -1485,6 +1488,11 @@ tic6x-*-elf)
 	tm_file="$tm_file c6x/c6x-abi.h"
 	extra_parts="$extra_parts crtbeginS.o crtendS.o crti.o crtn.o"
 	unwind_header=config/c6x/unwind-c6x.h
+	;;
+tricore-*-*)
+	tmake_file="${tmake_file} tricore/t-tricore"
+	tmake_file="${tmake_file} t-fdpbit"
+	extra_parts="${extra_parts} crti.o crtn.o"
 	;;
 v850*-*-*)
 	tmake_file="${tmake_file} v850/t-v850 t-fdpbit"

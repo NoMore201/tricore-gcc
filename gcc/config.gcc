@@ -575,6 +575,9 @@ xtensa*-*-*)
 	extra_options="${extra_options} fused-madd.opt"
 	extra_objs="xtensa-dynconfig.o"
 	;;
+tricore*-*-*)
+	cpu_type=tricore
+	;;
 esac
 
 tm_file=${cpu_type}/${cpu_type}.h
@@ -3450,6 +3453,22 @@ tic6x-*-uclinux)
 	tmake_file="t-sysroot-suffix t-slibgcc"
 	tmake_file="${tmake_file} c6x/t-c6x c6x/t-c6x-elf c6x/t-c6x-uclinux"
 	use_collect2=no
+	;;
+tricore-*)
+	tm_file="tricore/tricore-devices.h ${tm_file} elfos.h"
+	extra_modes=tricore/tricore-modes.def
+	extra_gcc_objs="driver-tricore.o tricore-devices.o"
+	extra_objs="${extra_objs} tricore-devices.o tricore-log.o"
+	tmake_file="${tmake_file} tricore/t-multilib tricore/t-tricore"
+	c_target_objs="${c_target_objs} tricore-c.o"
+	cxx_target_objs="${cxx_target_objs} tricore-c.o"
+	extra_options="${extra_options} tricore/tricore-mcpu.opt"
+	case "${with_newlib}" in
+	yes)
+		tm_file="${tm_file} newlib-stdint.h"
+		tm_defines="${tm_defines} DEFAULT_LIBC=LIBC_NEWLIB"
+		;;
+	esac
 	;;
 v850-*-rtems*)
 	target_cpu_default="TARGET_CPU_generic"
