@@ -527,8 +527,9 @@ gfc_init_decl_processing (void)
   global_binding_level = current_binding_level;
 
   /* Build common tree nodes. char_type_node is unsigned because we
-     only use it for actual characters, not for INTEGER(1).  */
-  build_common_tree_nodes (false);
+     only use it for actual characters, not for INTEGER(1).
+     double_type_node is not shortened to 32-bits size.  */
+  build_common_tree_nodes (false, false);
 
   /* Set up F95 type nodes.  */
   gfc_init_kinds ();
