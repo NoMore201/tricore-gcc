@@ -1490,8 +1490,7 @@ tic6x-*-elf)
 	unwind_header=config/c6x/unwind-c6x.h
 	;;
 tricore-*-*)
-	tmake_file="${tmake_file} tricore/t-tricore"
-	tmake_file="${tmake_file} t-fdpbit"
+	tmake_file="tricore/t-tricore t-fdpbit"
 	extra_parts="${extra_parts} crti.o crtn.o"
 	;;
 v850*-*-*)
