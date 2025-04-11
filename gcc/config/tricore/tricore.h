@@ -625,7 +625,7 @@ extern int tric_set_ratio (int);
 /* Storage Layout */
 
 #define SLOW_BYTE_ACCESS  1
-#define SLOW_SHORT_ACCESS 1
+//#define SLOW_SHORT_ACCESS 1
 
 #define BITS_BIG_ENDIAN  0
 #define BYTES_BIG_ENDIAN 0

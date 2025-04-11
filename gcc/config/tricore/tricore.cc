@@ -9148,8 +9148,10 @@ tric_asm_init_sections (void)
 
           tsec = tric_insert_section (ACONCAT ((name, suffix, NULL)),
                                       s_flags, align, BUILTINS_LOCATION);
+          //sec = get_unnamed_section (flags,
+          //                           tric_output_section_asm_op, tsec);
           sec = get_unnamed_section (flags,
-                                     tric_output_section_asm_op, tsec);
+                                     output_section_asm_op, tsec->name);
 
           /* Replace sections known to varasm by our own versions.
              but only the unaligned version */
@@ -9915,12 +9917,11 @@ tric_asm_output_external (FILE *file, tree decl, const char *name)
 
 //TODO
 static rtx_insn *
-tric_md_asm_adjust (vec<rtx>& outputs ATTRIBUTE_UNUSED, vec<rtx>& inputs ATTRIBUTE_UNUSED,
-		    vec<machine_mode>& input_modes ATTRIBUTE_UNUSED,
-		    vec<const char *>& constraints ATTRIBUTE_UNUSED,
-		    vec<rtx>& clobbers ATTRIBUTE_UNUSED,
-		    HARD_REG_SET& clobbered_regs ATTRIBUTE_UNUSED)
-
+tric_md_asm_adjust (vec<rtx> &/*outputs*/, vec<rtx> &/*inputs*/,
+                   vec<machine_mode> & /*input_modes*/,
+                   vec<const char *> &/*constraints*/,
+                   vec<rtx> & /*clobbers*/, HARD_REG_SET & /*clobbered_regs*/,
+            		   location_t /*loc*/)
 {
   return NULL;
 }
@@ -17667,7 +17668,7 @@ tric_promote_prototypes (const_tree fntype ATTRIBUTE_UNUSED)
 #define TARGET_HTC_IVOPT_BASE_COSTS_P tric_ivopt_base_costs_p
 
 // needs adaptations in tree-ssa-loop-ivopts.c
-//only the hook was added
+//only the hook was addee
 #undef  TARGET_HTC_IVOPT_USE_ADDRESS_P
 #define TARGET_HTC_IVOPT_USE_ADDRESS_P tric_ivopt_use_address_p
 // needs adaptations in sched-deps.c
