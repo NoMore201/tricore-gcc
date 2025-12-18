@@ -37,7 +37,7 @@ static char*
 tric_toupper (char *up, const char *lo)
 {
   char *up0 = up;
-  
+
   for (; *lo; lo++, up++)
     *up = TOUPPER (*lo);
 
@@ -71,7 +71,7 @@ tric_cpu_cpp_builtins (struct cpp_reader *pfile)
   builtin_define_std ("tricore");
 
   cpp_define (pfile, "__TRICORE__");
-  
+
   cpp_define_formatted (pfile, "__TC%s__", tric_core->name);
   cpp_define_formatted (pfile, "__TRICORE_CORE__=0x%3x", tric_core->id);
 
@@ -87,7 +87,7 @@ tric_cpu_cpp_builtins (struct cpp_reader *pfile)
 
   if (TRIC_HAVE_DIV)
     cpp_define (pfile, "__TRICORE_HAVE_DIV__");
-  
+
   if (TRIC_HAVE_FTOIZ)
     cpp_define (pfile, "__TRICORE_HAVE_FTOIZ__");
 
@@ -164,9 +164,11 @@ tric_resolve_overloaded_builtin (location_t loc, tree fndecl, void *vargs)
 {
   vec<tree, va_gc> *args = static_cast<vec<tree, va_gc> *> (vargs);
   unsigned int nargs = vec_safe_length (args);
-  enum built_in_function fcode = DECL_FUNCTION_CODE (fndecl);
+  const enum tric_builtin_id fcode = (enum tric_builtin_id)DECL_MD_FUNCTION_CODE (fndecl);
   tree ret = NULL_TREE;
   tree fndeclx = NULL_TREE;
+
+  gcc_assert ((unsigned) fcode < (unsigned) TRIC_BUILTIN_COUNT);
 
   switch (fcode)
     {
@@ -174,7 +176,7 @@ tric_resolve_overloaded_builtin (location_t loc, tree fndecl, void *vargs)
       break;
 
     case TRIC_BUILTIN_LDMST:
-      
+
       if (3 == nargs)
         fndeclx = targetm.builtin_decl (TRIC_BUILTIN_LDMST3, true);
       else if (4 == nargs)

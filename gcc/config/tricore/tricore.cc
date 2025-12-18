@@ -10830,11 +10830,11 @@ tric_expand_builtin (tree exp, rtx target,
                      int ignore ATTRIBUTE_UNUSED)
 {
   tree fndecl = TREE_OPERAND (CALL_EXPR_FN (exp), 0);
-  unsigned int id = DECL_FUNCTION_CODE (fndecl);
-  const tric_builtin_t *d = &tric_builtin[id];
+  const enum tric_builtin_id fcode = (enum tric_builtin_id)DECL_MD_FUNCTION_CODE (fndecl);
+  const tric_builtin_t * const d = &tric_builtin[fcode];
   bool void_p = VOID_TYPE_P (TREE_TYPE (TREE_TYPE (fndecl)));
 
-  gcc_assert (id < TRIC_BUILTIN_COUNT);
+  gcc_assert ((unsigned) fcode < (unsigned) TRIC_BUILTIN_COUNT);
 
   /* No special treatment needed: vanilla expand.  */
 
@@ -10924,9 +10924,11 @@ static tree
 tric_fold_builtin (tree fndecl, int n_args ATTRIBUTE_UNUSED, tree *arg,
                    bool ignore ATTRIBUTE_UNUSED)
 {
-  unsigned int fcode = DECL_FUNCTION_CODE (fndecl);
+  enum tric_builtin_id fcode = (enum tric_builtin_id)DECL_MD_FUNCTION_CODE (fndecl);
   tree result_type = TREE_TYPE (TREE_TYPE (fndecl));
   const tric_builtin_t *builtin = &tric_builtin[fcode];
+
+  gcc_assert ((unsigned) fcode < (unsigned) TRIC_BUILTIN_COUNT);
 
   if (builtin->tcode == NOP_EXPR)
     /* Nothing to fold */
